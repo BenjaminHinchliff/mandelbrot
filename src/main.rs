@@ -16,7 +16,7 @@ fn main() {
     let mut buffer: Vec<u8> = Vec::new();
     buffer.reserve((height * width * 3u32) as usize);
     for row in 0..height {
-        //println!("row {} of {}. {}% complete", row, height, (row as f32 / height as f32) * 100.0);
+        println!("row {} of {}. {}% complete", row, height, (row as f32 / height as f32) * 100.0);
         for col in 0..width {
             let real_c = (col as f64 - width as f64 / 2.0) * 4.0 / width as f64;
             let imaginary_c = (row as f64 - height as f64 / 2.0) * 4.0 / width as f64;
