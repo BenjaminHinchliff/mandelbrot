@@ -13,13 +13,6 @@ fn main() {
     let height: u32 = args[1].parse().unwrap();
     let max = args[1].parse().unwrap();
 
-    let mut colors: [(u8, u8, u8); 10000] = [(0, 0, 0); 10000];
-    for i in 0..max {
-        let i = i as f32;
-        let l = i / (i + 8.0);
-        colors[i as usize] = ((l * 255.0) as u8, (i / max as f32 * 255.0) as u8, 0u8);
-    }
-
     let mut buffer: Vec<u8> = Vec::new();
     buffer.reserve((height * width * 3u32) as usize);
     for row in 0..height {
