@@ -1,10 +1,17 @@
 use std::path::Path;
 use palette::{Hsv, rgb};
+use std::env;
 
 fn main() {
-    let width: u32 = 100000;
-    let height: u32 = 100000;
-    let max = 10000;
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 4 {
+        panic!("Not enough arguments - program requires width, height, and iterations arguments")
+    }
+
+    // crappy argument parsing
+    let width: u32 = args[1].parse().unwrap();
+    let height: u32 = args[1].parse().unwrap();
+    let max = args[1].parse().unwrap();
 
     let mut colors: [(u8, u8, u8); 10000] = [(0, 0, 0); 10000];
     for i in 0..max {
@@ -16,7 +23,7 @@ fn main() {
     let mut buffer: Vec<u8> = Vec::new();
     buffer.reserve((height * width * 3u32) as usize);
     for row in 0..height {
-        println!("row {} of {}. {}% complete", row, height, (row as f32 / height as f32) * 100.0);
+        //println!("row {} of {}. {}% complete", row, height, (row as f32 / height as f32) * 100.0);
         for col in 0..width {
             let real_c = (col as f64 - width as f64 / 2.0) * 4.0 / width as f64;
             let imaginary_c = (row as f64 - height as f64 / 2.0) * 4.0 / width as f64;
