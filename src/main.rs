@@ -8,21 +8,13 @@ fn main() {
         panic!("Not enough arguments - program requires width, height, and iterations arguments")
     }
 
-    // crappy argument parsing
-    let width = args[1].parse().unwrap();
-    let height = args[2].parse().unwrap();
-
-    let mut buffer: Vec<u8> = Vec::new();
-    {
-        let config = Config::new(
-            width,
-            height,
-            args[3].parse().unwrap(),
-            &mut buffer,
-        );
-        run(config);    
-    }
+    let mut config = Config::new(
+        args[1].parse().unwrap(),
+        args[2].parse().unwrap(),
+        args[3].parse().unwrap(),
+    );
+    run(&mut config);
     
 
-    image::save_buffer(&Path::new("image.png"), &buffer, width, height, image::RGB(8)).unwrap();
+    image::save_buffer(&Path::new("image.png"), &config.buffer, config.width, config.height, image::RGB(8)).unwrap();
 }
