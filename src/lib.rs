@@ -8,15 +8,25 @@ pub struct MandelbrotConfig {
 }
 
 impl MandelbrotConfig {
-    pub fn new(width: u32, height: u32, max_iterations: u32) -> MandelbrotConfig {
+    pub fn new(args: &[String]) -> Result<MandelbrotConfig, &'static str> {
+        if args.len() < 4 {
+            return Err("Not enough arguments - program requires width, height, and iterations arguments");
+        }
+
+        let width: u32 = args[1].parse()
+            .expect("Unable to parse the width");
+        let height: u32 = args[2].parse()
+            .expect("Unable to parse height");
+        let max_iterations: u32 = args[3].parse()
+            .expect("Unable to parse iterations");
         let mut buffer = Vec::new();
         buffer.reserve((width * height * 3u32) as usize);
-        MandelbrotConfig {
+        Ok(MandelbrotConfig {
             width,
             height,
             max_iterations,
             buffer,
-        }
+        })
     }
 }
 

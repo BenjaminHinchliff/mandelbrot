@@ -4,18 +4,10 @@ use mandelbrot::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 4 {
-        panic!("Not enough arguments - program requires width, height, and iterations arguments")
-    }
 
-    let mut config = MandelbrotConfig::new(
-        args[1].parse()
-            .expect("Unable to parse the width"),
-        args[2].parse()
-            .expect("Unable to parse height"),
-        args[3].parse()
-            .expect("Unable to parse iterations"),
-    );
+    let mut config = MandelbrotConfig::new(&args).unwrap_or_else(|err| {
+        panic!("Failed to init configuration: {}", err);
+    });
     generate_mandelbrot(&mut config);
     
     image::save_buffer(&Path::new("image.png"), &config.buffer, config.width, config.height, image::RGB(8))
