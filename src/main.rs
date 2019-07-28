@@ -8,7 +8,7 @@ fn main() {
         panic!("Not enough arguments - program requires width, height, and iterations arguments")
     }
 
-    let mut config = Config::new(
+    let mut config = MandelbrotConfig::new(
         args[1].parse()
             .expect("Unable to parse the width"),
         args[2].parse()
@@ -16,7 +16,8 @@ fn main() {
         args[3].parse()
             .expect("Unable to parse iterations"),
     );
-    run(&mut config);
+    generate_mandelbrot(&mut config);
     
-    image::save_buffer(&Path::new("image.png"), &config.buffer, config.width, config.height, image::RGB(8)).unwrap();
+    image::save_buffer(&Path::new("image.png"), &config.buffer, config.width, config.height, image::RGB(8))
+        .expect("Unable to save image");
 }

@@ -1,17 +1,17 @@
 use palette::{Hsv, rgb};
 
-pub struct Config {
+pub struct MandelbrotConfig {
     pub width: u32,
     pub height: u32,
     pub max_iterations: u32,
     pub buffer: Vec<u8>,
 }
 
-impl Config {
-    pub fn new(width: u32, height: u32, max_iterations: u32) -> Config {
+impl MandelbrotConfig {
+    pub fn new(width: u32, height: u32, max_iterations: u32) -> MandelbrotConfig {
         let mut buffer = Vec::new();
         buffer.reserve((width * height * 3u32) as usize);
-        Config {
+        MandelbrotConfig {
             width,
             height,
             max_iterations,
@@ -20,8 +20,8 @@ impl Config {
     }
 }
 
-pub fn run(config: &mut Config) {
-    let Config{ width, height, max_iterations, buffer } = config;
+pub fn generate_mandelbrot(config: &mut MandelbrotConfig) {
+    let MandelbrotConfig{ width, height, max_iterations, buffer } = config;
     for row in 0..*height {
         for col in 0..*width {
             let real_c = (col as f64 - *width as f64 / 2.0) * 4.0 / *width as f64;
